@@ -1,0 +1,4 @@
+[core]
+    remote = localstorage
+['remote "localstorage"']
+    url = /home/idris/dvc-storage/customer-churn-mlops

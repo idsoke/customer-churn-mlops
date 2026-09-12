@@ -14,10 +14,12 @@ env/
 # Data
 data/raw/*
 !data/raw/.gitkeep
+!data/raw/*.dvc
 
 # Models
 models/*
 !models/.gitkeep
+!models/*.dvc
 
 # Environment variables
 .env
