@@ -1,0 +1,35 @@
+stages:
+  preprocess:
+    cmd: python src/preprocess.py
+    deps:
+      - src/preprocess.py
+      - src/config.py
+      - data/raw/E Commerce Dataset.xlsx
+    params:
+      - preprocess.raw_file
+      - preprocess.sheet_name
+      - preprocess.test_size
+      - preprocess.random_state
+    outs:
+      - data/processed/train.csv
+      - data/processed/test.csv
+
+  train:
+    cmd: python src/train.py
+    deps:
+      - src/train.py
+      - src/config.py
+      - data/processed/train.csv
+      - data/processed/test.csv
+    params:
+      - train.n_estimators
+      - train.max_depth
+      - train.random_state
+      - train.class_weight
+    outs:
+      - models/churn_model.pkl
+      - models/feature_columns.json
+      - models/threshold.json
+    metrics:
+      - metrics.json:
+          cache: false

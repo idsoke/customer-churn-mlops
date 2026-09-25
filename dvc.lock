@@ -1,0 +1,75 @@
+schema: '2.0'
+stages:
+  preprocess:
+    cmd: python src/preprocess.py
+    deps:
+    - path: data/raw/E Commerce Dataset.xlsx
+      hash: md5
+      md5: 3586e9c1cb117a645b062deae6a961c2
+      size: 555610
+      isexec: true
+    - path: src/config.py
+      hash: md5
+      md5: 164ff3df1048d51a8a7f6f11e3f651d6
+      size: 746
+    - path: src/preprocess.py
+      hash: md5
+      md5: 14f17b8964a01a68c2c62d3de296f6fc
+      size: 5810
+    params:
+      params.yaml:
+        preprocess.random_state: 42
+        preprocess.raw_file: E Commerce Dataset.xlsx
+        preprocess.sheet_name: E Comm
+        preprocess.test_size: 0.2
+    outs:
+    - path: data/processed/test.csv
+      hash: md5
+      md5: 9caf90a9afcf3ef3ae2bc7c27e71ffe9
+      size: 140263
+    - path: data/processed/train.csv
+      hash: md5
+      md5: 4cfede3eed6ccf59eb0141e452d03c1f
+      size: 560470
+  train:
+    cmd: python src/train.py
+    deps:
+    - path: data/processed/test.csv
+      hash: md5
+      md5: 9caf90a9afcf3ef3ae2bc7c27e71ffe9
+      size: 140263
+    - path: data/processed/train.csv
+      hash: md5
+      md5: 4cfede3eed6ccf59eb0141e452d03c1f
+      size: 560470
+    - path: src/config.py
+      hash: md5
+      md5: 164ff3df1048d51a8a7f6f11e3f651d6
+      size: 746
+    - path: src/train.py
+      hash: md5
+      md5: dafc1d633904de6f6257a259e99eb7f8
+      size: 4172
+    params:
+      params.yaml:
+        train.class_weight: balanced
+        train.max_depth: 10
+        train.n_estimators: 200
+        train.random_state: 42
+    outs:
+    - path: metrics.json
+      hash: md5
+      md5: b25bde35238b391a0bd4bab2613d9724
+      size: 199
+    - path: models/churn_model.pkl
+      hash: md5
+      md5: 2f2b2838b688c012983eee12929380ef
+      size: 7684169
+    - path: models/feature_columns.json
+      hash: md5
+      md5: 4c77e1befd9774a3801a6b8b3f65ca1e
+      size: 681
+    - path: models/threshold.json
+      hash: md5
+      md5: 06265812ca0810e40b7aef001d636527
+      size: 37
