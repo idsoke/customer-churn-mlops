@@ -1,3 +1,13 @@
+---
+title: Customer Churn Predictor API
+emoji: 📉
+colorFrom: blue
+colorTo: purple
+sdk: docker
+app_port: 7860
+pinned: false
+---
+
 # Customer Churn MLOps
 
 End-to-end project for predicting customer churn, from data exploration to a served model API.
