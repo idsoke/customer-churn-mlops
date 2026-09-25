@@ -20,6 +20,9 @@ data/raw/*
 models/*
 !models/.gitkeep
 !models/*.dvc
+!models/churn_model.pkl
+!models/feature_columns.json
+!models/threshold.json
 
 # Environment variables
 .env

@@ -1,5 +1,6 @@
 import json
 import logging
+import os
 
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
@@ -17,11 +18,18 @@ app = FastAPI(
     version="1.0.0",
 )
 
-# Angular (ng serve) default jalan di localhost:4200, origin berbeda dari API
-# ini (localhost:8000) -- tanpa CORS, browser akan memblokir request-nya.
+# Origin frontend diizinkan lewat CORS, dipisah koma via env var ALLOWED_ORIGINS
+# (mis. "https://fe-customer-churn-mlops.vercel.app,http://localhost:4200").
+# Default localhost:4200 supaya dev lokal (ng serve) tetap jalan tanpa config.
+ALLOWED_ORIGINS = [
+    origin.strip()
+    for origin in os.getenv("ALLOWED_ORIGINS", "http://localhost:4200").split(",")
+    if origin.strip()
+]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:4200"],
+    allow_origins=ALLOWED_ORIGINS,
     allow_methods=["*"],
     allow_headers=["*"],
 )
